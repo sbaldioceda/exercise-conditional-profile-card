@@ -33,14 +33,14 @@ function render(variables = {}) {
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
-          <ul class="position-right">
-            <li><a href="https://twitter.com/alesanchezr"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="https://github.com/alesanchezr"><i class="fa fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/alesanchezr"><i class="fa fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/alesanchezr"><i class="fa fa-instagram"></i></a></li>
+          <h1>${variables.name} ${variables.lastname}</h1>
+          <h2>${variables.role}</h2>
+          <h3>${variables.city}, ${variables.country}</h3>
+          <ul class="${variables.socialMediaPosition}">
+            <li><a href="https://twitter.com/${variables.twitter}"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="https://github.com/${variables.github}"><i class="fa fa-github"></i></a></li>
+            <li><a href="https://linkedin.com/${variables.linkedin}"><i class="fa fa-linkedin"></i></a></li>
+            <li><a href="https://instagram.com/${variables.instagram}"><i class="fa fa-instagram"></i></a></li>
           </ul>
         </div>
     `;
@@ -60,32 +60,52 @@ window.onload = function() {
     // social media bar position (left or right)
     socialMediaPosition: "position-left",
     // social media usernames
-    twitter: null,
-    github: "alesanchezr",
-    linkedin: null,
-    instagram: null,
-    name: null,
-    lastname: null,
-    role: null,
-    country: null,
-    city: null
+    twitter: "Twitter",
+    github: "github",
+    linkedin: "linkedin",
+    instagram: "instagram",
+    name: "",
+    lastname: "",
+    role: "",
+    country: "",
+    city: ""
   };
   render(window.variables); //render the card for the first time
+
+  /*document.addEventListener('keydown', (event) => {
+      const keyName = event.key;
+      alert('keydown event\n\n' + 'key: ' + keyName);
+    });*/
 
   document.querySelectorAll(".picker").forEach(function(elm) {
     elm.addEventListener("change", function(e) {
       // <- add a listener to every input
       const attribute = e.target.getAttribute("for"); // when any input changes, collect the value
+
       let values = {};
       values[attribute] =
-        this.value == "" || this.value == "null"
-          ? null
-          : this.value == "true"
-          ? true
-          : this.value == "false"
+        this.value == "" || this.value == "null" //Condición A
+          ? "" //Verdadero A
+          : this.value == "true" //Falso B
+          ? true // Condición B
+          : this.value == "false" //Condición
           ? false
           : this.value;
+      //console.log(this.value);
       render(Object.assign(window.variables, values)); // render again the card with new valus
     });
   });
 };
+/*if (this.value == "" || this.value == "null") {
+  ("");
+} else {
+  if (this.value == "true") {
+    true;
+  } else {
+    if (this.value == "false") {
+      false;
+    } else {
+      this.value;
+    }
+  }
+}*/
